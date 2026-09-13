@@ -20,10 +20,13 @@ if(ENV.NODE_ENV === 'production') {
 }
 
 
-
-app.listen(ENV.PORT, () => {
-    connectDB(); // Connect to the database when the server starts
-    console.log(`Server is running on port ${ENV.PORT}`)});
+const startServer = async () => {
+    await connectDB();
+    app.listen(ENV.PORT, () => {
+        console.log(`Server is running on port ${ENV.PORT}`);
+    });
+};
+startServer();
 
 app.get("/{*any}", (req, res) => {
     res.sendFile(path.join(__dirname, "../admin", "dist", "index.html"));
